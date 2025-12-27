@@ -1,0 +1,41 @@
+imageTag: "7.17.3"
+replicas: 1
+
+clusterInitialMasterNodes:
+  - elasticsearch-master-0
+
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: false
+    xpack.security.transport.ssl.enabled: false
+    xpack.security.http.ssl.enabled: false
+    xpack.ml.enabled: false
+    xpack.transform.enabled: false
+
+tls:
+  selfSignedCertificate:
+    enabled: false
+
+roles:
+  master: "true"
+  data: "true"
+  ingest: "true"
+
+clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+
+esJavaOpts: "-Xms1g -Xmx1g"
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "2Gi"
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"
+
+volumeClaimTemplate:
+  storageClassName: standard
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 20Gi

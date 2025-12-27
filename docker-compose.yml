@@ -1,0 +1,193 @@
+services:
+  pms-mariadb:
+    restart: always
+    container_name: pms-mariadb
+    image: 'mariadb:12.0'
+    environment:
+      MARIADB_ROOT_USERNAME: root
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_ROOT_HOST: '%'
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./infrastructure/database/pms.sql:/docker-entrypoint-initdb.d/0_init.sql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MARIADB_ROOT_USERNAME --password=$$MARIADB_ROOT_PASSWORD
+      timeout: 2s
+      retries: 2
+    networks:
+      - pms-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pms-network
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.1
+    container_name: logstash
+    volumes:
+      - ./infrastructure/observability/logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "5000:5000/tcp"
+    environment:
+      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9600 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pms-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.1
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - pms-network
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - pms-network
+
+  # Grafana for metrics and traces visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infrastructure/observability/grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      prometheus:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - pms-network
+
+  # Patient Service
+  ms-patient-service:
+    image: pms/patient-service
+    container_name: ms-patient-service
+    build:
+      context: microservices/ms-patient
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      pms-mysql-db:
+        condition: service_healthy
+      logstash:
+        condition: service_healthy
+    ports:
+      - "9081:9081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5000
+    networks:
+      - pms-network
+
+  # Doctor Service
+  ms-doctor-service:
+    image: pms/doctor-service
+    container_name: ms-doctor-service
+    build:
+      context: microservices/ms-doctor
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      pms-mysql-db:
+        condition: service_healthy
+      logstash:
+        condition: service_healthy
+    ports:
+      - "9082:9082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5000
+    networks:
+      - pms-network
+
+  # Appointment Service
+  ms-appointment-service:
+    image: pms/appointment-service
+    container_name: ms-appointment-service
+    build:
+      context: microservices/ms-appointment
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      pms-mysql-db:
+        condition: service_healthy
+      logstash:
+        condition: service_healthy
+    ports:
+      - "9083:9083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5000
+    networks:
+      - pms-network
+
+networks:
+  pms-network:
+    driver: bridge
+
+volumes:
+  elasticsearch_data:
+  grafana_data:
+  kibana_data:

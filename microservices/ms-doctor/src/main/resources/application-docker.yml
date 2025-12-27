@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://pms-mariadb:3306/pms-doctor?useSSL=false&useTimezone=true&serverTimezone=UTC
+    username: root
+    password: root
+

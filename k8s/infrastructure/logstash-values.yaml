@@ -1,0 +1,48 @@
+imageTag: "7.17.3"
+replicas: 1
+
+logstashJavaOpts: "-Xmx768m -Xms768m"
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "1Gi"
+  limits:
+    cpu: "500m"
+    memory: "1.5Gi"
+
+# ES Hosts
+# Note: In the chart, this is used for the default pipeline.
+# Since we are overriding the pipeline with ConfigMap, this is used as a fallback or if config is missing.
+hosts:
+  - "http://elasticsearch-master:9200"
+
+# Logstash Config
+logstashConfig:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    xpack.monitoring.enabled: false
+  pipelines.yml: |
+    - pipeline.id: main
+      path.config: "/usr/share/logstash/pipeline/logstash.conf"
+      pipeline.ecs_compatibility: disabled
+
+# Override pipeline with our ConfigMap
+extraVolumes:
+  - name: pipeline-config
+    configMap:
+      name: logstash-pipeline-config
+
+extraVolumeMounts:
+  - name: pipeline-config
+    mountPath: /usr/share/logstash/pipeline/logstash.conf
+    subPath: logstash.conf
+
+# Expose service port
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5000
+      protocol: TCP
+      targetPort: 5000

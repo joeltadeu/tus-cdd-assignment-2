@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-patient-service
+  namespace: pms
+  labels:
+    app: ms-patient-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-patient-service
+  template:
+    metadata:
+      labels:
+        app: ms-patient-service
+    spec:
+      containers:
+        - name: ms-patient-service
+          image: joeltadeu/ms-patient
+          imagePullPolicy: Always # Use IfNotPresent for local dev
+          ports:
+            - containerPort: 9081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mariadb://pms-mariadb:3306/pms-patient?useSSL=false&useTimezone=true&serverTimezone=UTC"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pms-mariadb-secret
+                  key: mariadb-root-password
+            - name: LOGSTASH_HOST
+              value: "logstash-logstash.pms.svc.cluster.local"
+            - name: LOGSTASH_PORT
+              value: "5000"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9081
+            initialDelaySeconds: 30
+            periodSeconds: 5

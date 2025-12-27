@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-appointment-service
+  namespace: pms
+  labels:
+    app: ms-appointment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-appointment-service
+  template:
+    metadata:
+      labels:
+        app: ms-appointment-service
+    spec:
+      containers:
+        - name: ms-appointment-service
+          image: joeltadeu/ms-appointment
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9083
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mariadb://pms-mariadb:3306/pms-appointment?useSSL=false&useTimezone=true&serverTimezone=UTC"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pms-mariadb-secret
+                  key: mariadb-root-password
+            - name: LOGSTASH_HOST
+              value: "logstash-logstash.pms.svc.cluster.local"
+            - name: LOGSTASH_PORT
+              value: "5000"
+            # Inter-service communication URLs
+            - name: CLIENT_DOCTOR_URL
+              value: "http://ms-doctor-service:9082"
+            - name: CLIENT_PATIENT_URL
+              value: "http://ms-patient-service:9081"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9083
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9083
+            initialDelaySeconds: 30
+            periodSeconds: 5

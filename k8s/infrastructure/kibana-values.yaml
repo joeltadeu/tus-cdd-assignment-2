@@ -1,0 +1,13 @@
+imageTag: "7.17.3"
+replicas: 1
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "256M"
+  limits:
+    cpu: "500m"
+    memory: "512M"
+
+serverHost: "0.0.0.0"
+elasticsearchHosts: "http://elasticsearch-master:9200"

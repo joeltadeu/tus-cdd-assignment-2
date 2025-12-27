@@ -1,0 +1,35 @@
+replicas: 1
+
+server:
+  retention: 10d
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
+service:
+  type: ClusterIP
+
+# Add extra scrape configs without removing defaults
+extraScrapeConfigs: |
+  - job_name: "appointment-service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["ms-appointment-service:9083"]
+        labels:
+          service: "appointment-service"
+
+  - job_name: "doctor-service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["ms-doctor-service:9082"]
+        labels:
+          service: "doctor-service"
+
+  - job_name: "patient-service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["ms-patient-service:9081"]
+        labels:
+          service: "patient-service"

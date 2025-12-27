@@ -1,0 +1,80 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pms-ingress
+  namespace: pms
+spec:
+  ingressClassName: nginx
+  rules:
+    # --- Grafana ---
+    - host: grafana.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 80
+
+
+    # --- Prometheus ---
+    - host: prometheus.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus-server
+                port:
+                  number: 80
+
+    # --- Kibana ---
+    - host: kibana.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kibana-kibana
+                port:
+                  number: 5601
+
+    # --- Patient Service ---
+    - host: pms.local
+      http:
+        paths:
+          - path: /v1/patients
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-patient-service
+                port:
+                  number: 9081
+
+    # --- Doctor Service ---
+    - host: pms.local
+      http:
+        paths:
+          - path: /v1/doctors
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-doctor-service
+                port:
+                  number: 9082
+
+    # --- Appointment Service ---
+    - host: pms.local
+      http:
+        paths:
+          - path: /v1/appointments
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-appointment-service
+                port:
+                  number: 9083

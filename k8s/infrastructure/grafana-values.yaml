@@ -1,0 +1,55 @@
+adminUser: admin
+adminPassword: admin
+
+env:
+  GF_USERS_ALLOW_SIGN_UP: "false"
+
+grafanaIni:
+  paths:
+    provisioning: /etc/grafana/provisioning
+  server:
+    enable_gzip: true
+  security:
+    allow_embedding: true
+  users:
+    default_theme: light
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-server
+        isDefault: true
+        editable: true
+
+      - name: Elasticsearch
+        type: elasticsearch
+        access: proxy
+        url: http://elasticsearch-master:9200
+        database: "microservices-logs-*"
+        jsonData:
+          timeField: "@timestamp"
+          esVersion: 7.0.0
+          logMessageField: "message"
+          logLevelField: "level"
+        editable: true
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    folder: /var/lib/grafana/dashboards
+    searchNamespace: pms
+
+persistence:
+  enabled: true
+  type: pvc
+  storageClassName: standard
+  size: 10Gi
+
+service:
+  type: ClusterIP
