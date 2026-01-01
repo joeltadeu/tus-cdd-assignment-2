@@ -1,6 +1,3 @@
--- Use the schema
-USE `pms-doctor`;
-
 -- Create 'speciality' table if it doesn't exist
 CREATE TABLE IF NOT EXISTS `speciality` (
     `id`          INT(11) NOT NULL AUTO_INCREMENT,

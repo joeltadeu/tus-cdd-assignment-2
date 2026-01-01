@@ -40,7 +40,7 @@
         <module>microservices/ms-doctor</module>
         <module>microservices/ms-patient</module>
         <module>microservices/ms-appointment</module>
-
+        <module>performance/pms-performance-tests</module>
     </modules>
 
     <dependencies>

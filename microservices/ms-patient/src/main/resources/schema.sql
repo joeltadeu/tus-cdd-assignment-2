@@ -1,6 +1,3 @@
--- Use the schema
-USE `pms-patient`;
-
 -- Create 'patient' table if it doesn't exist
 CREATE TABLE IF NOT EXISTS `patient`  (
     `id` int(11) NOT NULL AUTO_INCREMENT,

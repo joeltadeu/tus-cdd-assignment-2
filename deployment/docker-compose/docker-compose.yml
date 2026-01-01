@@ -4,7 +4,6 @@ services:
     container_name: pms-mariadb
     image: 'mariadb:12.0'
     environment:
-      MARIADB_ROOT_USERNAME: root
       MARIADB_ROOT_PASSWORD: root
       MARIADB_ROOT_HOST: '%'
     volumes:
@@ -13,7 +12,7 @@ services:
     ports:
       - "3307:3306"
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u $$MARIADB_ROOT_USERNAME --password=$$MARIADB_ROOT_PASSWORD
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       timeout: 2s
       retries: 2
     networks:
@@ -122,11 +121,11 @@ services:
     image: pms/patient-service
     container_name: ms-patient-service
     build:
-      context: microservices/ms-patient
-      dockerfile: Dockerfile
+      context: ../../microservices/ms-patient
+      dockerfile: ../../microservices/ms-patient/Dockerfile
     restart: on-failure
     depends_on:
-      pms-mysql-db:
+      pms-mariadb:
         condition: service_healthy
       logstash:
         condition: service_healthy
@@ -144,11 +143,11 @@ services:
     image: pms/doctor-service
     container_name: ms-doctor-service
     build:
-      context: microservices/ms-doctor
-      dockerfile: Dockerfile
+      context: ../../microservices/ms-doctor
+      dockerfile: ../../microservices/ms-doctor/Dockerfile
     restart: on-failure
     depends_on:
-      pms-mysql-db:
+      pms-mariadb:
         condition: service_healthy
       logstash:
         condition: service_healthy
@@ -166,11 +165,11 @@ services:
     image: pms/appointment-service
     container_name: ms-appointment-service
     build:
-      context: microservices/ms-appointment
-      dockerfile: Dockerfile
+      context: ../../microservices/ms-appointment
+      dockerfile: ../../microservices/ms-appointment/Dockerfile
     restart: on-failure
     depends_on:
-      pms-mysql-db:
+      pms-mariadb:
         condition: service_healthy
       logstash:
         condition: service_healthy

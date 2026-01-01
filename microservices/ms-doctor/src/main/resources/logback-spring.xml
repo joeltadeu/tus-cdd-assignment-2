@@ -27,15 +27,14 @@
         </encoder>
     </appender>
 
-    <!-- LOCAL PROFILE: console only -->
-    <springProfile name="local">
+    <springProfile name="!docker">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 
     <!-- NON-LOCAL PROFILES: console + logstash -->
-    <springProfile name="!local">
+    <springProfile name="docker">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOGSTASH"/>

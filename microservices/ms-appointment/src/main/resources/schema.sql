@@ -1,6 +1,3 @@
--- Use the schema
-USE `pms-appointment`;
-
 -- Create 'appointment' table if it doesn't exist
 CREATE TABLE `appointment` (
     `id` int(11) NOT NULL AUTO_INCREMENT,

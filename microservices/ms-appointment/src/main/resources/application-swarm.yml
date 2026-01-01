@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/pms-appointment?useSSL=false&useTimezone=true&serverTimezone=UTC
+    username: root
+    password: root
+
+client:
+  doctor:
+    url: http://ms-doctor-service:9082
+  patient:
+    url: http://ms-patient-service:9081
