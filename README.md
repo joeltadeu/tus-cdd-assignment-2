@@ -92,6 +92,8 @@ Once services are running, you can access the interactive API documentation:
 - Doctor Service: http://localhost:9082/swagger-ui.html
 - Appointment Service: http://localhost:9083/swagger-ui.html
 
+![Alt text](__assets/openapi-documentation.png?raw=true "OpenAPI Documentation Example")
+
 ### Postman Collection
 
 A **Postman collection** is provided to test all APIs.
@@ -262,6 +264,8 @@ This project demonstrates three distinct strategies for deploying the microservi
   - Prometheus
   - Grafana
 
+![Alt text](__assets/docker-compose-folder-structure.png?raw=true "Docker Compose Folder Structure")
+
 Commands:
 
 ```bash
@@ -355,6 +359,8 @@ docker stack rm pms
 #### Deployment Structure
 
 Infrastructure (Helm): Located in `/deployment/k8s/infrastructure`.
+
+![Alt text](__assets/kubernetes-folder-structure.png?raw=true "Kubernetes Folder Structure")
 
 #### Deployment Commands
 

@@ -27,8 +27,7 @@
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
         <pms-commons-lib.version>0.0.1-SNAPSHOT</pms-commons-lib.version>
         <pms-models-lib.version>0.0.1-SNAPSHOT</pms-models-lib.version>
-        <springdoc-openapi-ui.version>1.8.0</springdoc-openapi-ui.version>
-        <springdoc-openapi-data-rest.version>1.8.0</springdoc-openapi-data-rest.version>
+        <springdoc.version>2.8.15</springdoc.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <opentracing-spring-jaeger-starter.version>3.3.1</opentracing-spring-jaeger-starter.version>
@@ -62,18 +61,13 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc-openapi-ui.version}</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-data-rest</artifactId>
-            <version>${springdoc-openapi-data-rest.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
