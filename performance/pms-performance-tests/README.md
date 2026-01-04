@@ -134,7 +134,7 @@ List of chain classes:
 
 ## 🏗️ Architecture Diagram
 
-![Alt text](__assets/gatling-architecture.png?raw=true "Project Architecture Diagram")
+![Alt text](../__assets/gatling-architecture.png?raw=true "Project Architecture Diagram")
 
 
 ## ⚙️ Configuration
