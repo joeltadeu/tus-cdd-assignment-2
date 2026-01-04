@@ -134,7 +134,7 @@ List of chain classes:
 
 ## 🏗️ Architecture Diagram
 
-![Alt text](../__assets/gatling-architecture.png?raw=true "Project Architecture Diagram")
+![Alt text](../../__assets/gatling-architecture.png?raw=true "Project Architecture Diagram")
 
 
 ## ⚙️ Configuration
@@ -214,7 +214,7 @@ Report Includes
 - Requests per second
 - Individual endpoint metrics
 
-![Alt text](__assets/gatling-results.png?raw=true "Gatling Test Results Example")
+![Alt text](../../__assets/gatling-results.png?raw=true "Gatling Test Results Example")
 
 
 
