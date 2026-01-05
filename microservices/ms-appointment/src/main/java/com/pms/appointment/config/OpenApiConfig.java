@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
                 "The Appointment Service API handles the scheduling and tracking of medical consultations. It integrates with the Doctor and Patient services to validate participants, enabling the creation of appointments, retrieval of consultation details, and monitoring of appointment statuses.",
             contact = @Contact(name = "Joel Silva", email = "joeltadeu@gmail.com"),
             license =
-                @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")),
+                @License(name = "MIT License", url = "https://mit-license.org/")),
     servers = {
       @Server(url = "http://localhost:9083", description = "Development Server"),
       @Server(url = "http://pms.local", description = "Kubernetes PMS Cluster")
