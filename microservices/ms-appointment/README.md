@@ -8,14 +8,14 @@ The Appointment Service API handles the scheduling and tracking of medical consu
 
 ## 🏗️ Architecture
 
-![Alt text](_assets/appointment-architecture.png?raw=true "Architecture Diagram")
+![Alt text](../../__assets/images/appointment-architecture.png?raw=true "Architecture Diagram")
 
 
 ---
 
 ## ️🗄️ Database
 
-![Alt text](_assets/appointment-der.png?raw=true "Entity Relationship Diagram")
+![Alt text](../../__assets/images/appointment-der.png?raw=true "Entity Relationship Diagram")
 
 ---
 
@@ -89,7 +89,7 @@ Once service is running, you can access the interactive API documentation:
 
 http://localhost:9083/swagger-ui.html
 
-![Alt text](_assets/appointment-openapi-documentation.png?raw=true "OpenAPI Documentation Example")
+![Alt text](../../__assets/images/appointment-openapi-documentation.png?raw=true "OpenAPI Documentation Example")
 
 ### Postman Collection
 

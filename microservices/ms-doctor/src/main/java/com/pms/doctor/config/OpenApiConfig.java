@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
                 "The Doctor Service API is responsible for managing the lifecycle of doctor profiles within the system. It provides endpoints to create, retrieve, update, and delete medical staff records, including essential details such as specialties, departments, and contact information.",
             contact = @Contact(name = "Joel Silva", email = "joeltadeu@gmail.com"),
             license =
-                @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")),
+                @License(name = "MIT License", url = "https://mit-license.org/")),
     servers = {
       @Server(url = "http://localhost:9082", description = "Development Server"),
       @Server(url = "http://pms.local", description = "Kubernetes PMS Cluster")

@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
                 "The Patient Service API manages comprehensive patient records, handling personal and demographic information. It provides endpoints to register new patients, retrieve individual profiles, update existing records, and manage patient data securely.",
             contact = @Contact(name = "Joel Silva", email = "joeltadeu@gmail.com"),
             license =
-                @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0")),
+                @License(name = "MIT License", url = "https://mit-license.org/")),
     servers = {
       @Server(url = "http://localhost:9081", description = "Development Server"),
       @Server(url = "http://pms.local", description = "Kubernetes PMS Cluster")

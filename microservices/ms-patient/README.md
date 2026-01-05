@@ -8,14 +8,14 @@ The Patient Service API manages comprehensive patient records, handling personal
 
 ## 🏗️ Architecture
 
-![Alt text](../../__assets/patient-architecture.png?raw=true "Architecture Diagram")
+![Alt text](../../__assets/images/patient-architecture.png?raw=true "Architecture Diagram")
 
 
 ---
 
 ## ️🗄️ Database
 
-![Alt text](../../__assets/patient-der.png?raw=true "Entity Relationship Diagram")
+![Alt text](../../__assets/images/patient-der.png?raw=true "Entity Relationship Diagram")
 
 ---
 
@@ -150,7 +150,7 @@ Once service is running, you can access the interactive API documentation:
 
 http://localhost:9081/swagger-ui.html
 
-![Alt text](../../__assets/patient-openapi-documentation.png?raw=true "OpenAPI Documentation Example")
+![Alt text](../../__assets/images/patient-openapi-documentation.png?raw=true "OpenAPI Documentation Example")
 
 ### Postman Collection
 
@@ -183,7 +183,7 @@ FROM gcr.io/distroless/java21-debian13
 
 ADD target/patient-service.jar patient-service.jar
 
-EXPOSE 9083
+EXPOSE 9081
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "-jar", "/patient-service.jar"]
 ```

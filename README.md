@@ -28,7 +28,7 @@ Key Technical Features:
 
 This section presents the **high-level architecture** of the system.
 
-![Alt text](__assets/pms-architecture.png?raw=true "Patient Management System Architecture")
+![Alt text](__assets/images/pms-architecture.png?raw=true "Patient Management System Architecture")
 
 ---
 
@@ -51,7 +51,7 @@ This section presents the **high-level architecture** of the system.
 
 Each microservice persists data in its own isolated MariaDB database schema. This ensures data encapsulation and loose coupling between services.
 
-![Alt text](__assets/pms-der.png?raw=true "Patient Management DER")
+![Alt text](__assets/images/pms-der.png?raw=true "Patient Management DER")
 
 ---
 
@@ -95,7 +95,7 @@ Once services are running, you can access the interactive API documentation:
 - Doctor Service: http://localhost:9082/swagger-ui.html
 - Appointment Service: http://localhost:9083/swagger-ui.html
 
-![Alt text](__assets/openapi-documentation.png?raw=true "OpenAPI Documentation Example")
+![Alt text](__assets/images/openapi-documentation.png?raw=true "OpenAPI Documentation Example")
 
 ### Postman Collection
 
@@ -170,7 +170,7 @@ Each microservice is configured with `logback-spring.xml` to send logs to Logsta
 3. Create an index pattern matching pms-logs-* (as defined in the Logstash output).
 4. Navigate to Discover. You should see JSON logs from the microservices arrive via the Logstash pipeline configured in the section.
 
-![Alt text](__assets/kibana-discover-logs.png?raw=true "Kibana Log Discover Example")
+![Alt text](__assets/images/kibana-discover-logs.png?raw=true "Kibana Log Discover Example")
 
 
 ---
@@ -205,7 +205,7 @@ management:
 ```
 Access Prometheus at http://localhost:9090
 
-![Alt text](__assets/prometheus-query.png?raw=true "Prometheus Query Example")
+![Alt text](__assets/images/prometheus-query.png?raw=true "Prometheus Query Example")
 
 ---
 
@@ -217,7 +217,7 @@ Access Prometheus at http://localhost:9090
 - Username: `admin`
 - Password: `admin`
 
-![Alt text](__assets/grafana-dashboard.png?raw=true "Grafana Dashboard Example")
+![Alt text](__assets/images/grafana-dashboard.png?raw=true "Grafana Dashboard Example")
 
 ---
 
@@ -248,7 +248,7 @@ mvn gatling:test
 - `users`: Number of virtual users
 - `durationMinutes`: Test duration
 
-![Alt text](__assets/gatling-results.png?raw=true "Gatling Test Results Example")
+![Alt text](__assets/images/gatling-results.png?raw=true "Gatling Test Results Example")
 
 ---
 
@@ -267,7 +267,7 @@ This project demonstrates three distinct strategies for deploying the microservi
   - Prometheus
   - Grafana
 
-![Alt text](__assets/docker-compose-folder-structure.png?raw=true "Docker Compose Folder Structure")
+![Alt text](__assets/images/docker-compose-folder-structure.png?raw=true "Docker Compose Folder Structure")
 
 Commands:
 
@@ -363,7 +363,7 @@ docker stack rm pms
 
 Infrastructure (Helm): Located in `/deployment/k8s/infrastructure`.
 
-![Alt text](__assets/kubernetes-folder-structure.png?raw=true "Kubernetes Folder Structure")
+![Alt text](__assets/images/kubernetes-folder-structure.png?raw=true "Kubernetes Folder Structure")
 
 #### Deployment Commands
 

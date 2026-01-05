@@ -1,0 +1,60 @@
+@startuml
+actor User
+
+participant PmsLoadSimulation
+participant SimulationConfig
+participant PmsEndToEndScenario
+participant DoctorChains
+participant PatientChains
+participant AppointmentChains
+
+participant "Doctor Service" as DoctorSvc
+participant "Patient Service" as PatientSvc
+participant "Appointment Service" as AppointmentSvc
+participant "Gatling Engine" as Gatling
+
+User -> PmsLoadSimulation : Run load test (mvn gatling:test)
+
+PmsLoadSimulation -> SimulationConfig : Load configuration
+SimulationConfig --> PmsLoadSimulation : URLs, users, duration
+
+PmsLoadSimulation -> PmsEndToEndScenario : build()
+PmsEndToEndScenario --> PmsLoadSimulation : ScenarioBuilder
+
+PmsLoadSimulation -> Gatling : setUp() & injectClosed(users)
+
+Gatling -> PmsEndToEndScenario : Execute scenario
+
+PmsEndToEndScenario -> DoctorChains : createDoctor()
+DoctorChains -> DoctorSvc : POST /v1/doctors
+DoctorSvc --> DoctorChains : doctorId
+
+PmsEndToEndScenario -> DoctorChains : getDoctorById()
+DoctorChains -> DoctorSvc : GET /v1/doctors/{id}
+
+PmsEndToEndScenario -> DoctorChains : getAllDoctors()
+DoctorChains -> DoctorSvc : GET /v1/doctors
+
+PmsEndToEndScenario -> PatientChains : createPatient()
+PatientChains -> PatientSvc : POST /v1/patients
+PatientSvc --> PatientChains : patientId
+
+PmsEndToEndScenario -> PatientChains : getPatientById()
+PatientChains -> PatientSvc : GET /v1/patients/{id}
+
+PmsEndToEndScenario -> PatientChains : getAllPatients()
+PatientChains -> PatientSvc : GET /v1/patients
+
+PmsEndToEndScenario -> AppointmentChains : createAppointment()
+AppointmentChains -> AppointmentChains : Build payload\n(doctorId, patientId)
+AppointmentChains -> AppointmentSvc : POST /v1/appointments
+AppointmentSvc --> AppointmentChains : appointmentId
+
+PmsEndToEndScenario -> AppointmentChains : getAppointmentById()
+AppointmentChains -> AppointmentSvc : GET /v1/appointments/{id}
+
+Gatling -> Gatling : Collect metrics
+Gatling -> Gatling : Generate HTML report
+
+Gatling --> User : Gatling HTML report
+@enduml
