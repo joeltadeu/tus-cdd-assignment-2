@@ -1,4 +1,7 @@
-# PMS Performance Test (Gatling)
+![Java](https://img.shields.io/badge/Java-21-orange)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+# PMS Performance Test
 
 ## 📋 Overview
 
@@ -216,7 +219,13 @@ Report Includes
 
 ![Alt text](__assets/gatling-results.png?raw=true "Gatling Test Results Example")
 
+---
 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](https://mit-license.org/) file for details.
+
+---
 
 
 

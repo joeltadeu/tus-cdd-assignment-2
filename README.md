@@ -1,3 +1,6 @@
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 # Patient Management System (PMS)
 
@@ -428,5 +431,11 @@ Execute the command below to run the container individually (requires database s
 ```bash
 docker run -e SPRING_PROFILES_ACTIVE=local -p 9082:9082 doctor-service
 ```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](https://mit-license.org/) file for details.
 
 ---

@@ -145,7 +145,8 @@ docker run -e SPRING_PROFILES_ACTIVE=local -p 9083:9083 appointment-service
 
 ---
 
-## License
+## 📄 License
+
 This project is licensed under the MIT License - see the [LICENSE](https://mit-license.org/) file for details.
 
 ---
