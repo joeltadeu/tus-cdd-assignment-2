@@ -1,4 +1,4 @@
-package com.jmanagement.karate;
+package com.pms.karate;
 
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
