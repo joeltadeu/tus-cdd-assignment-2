@@ -1,0 +1,7 @@
+{
+  "firstName": "{{firstName}}",
+  "lastName": "{{lastName}}",
+  "email": "{{email}}",
+  "address": "3501 Washington Ave, Los Angeles, 90046",
+  "dateOfBirth": "1972-08-27"
+}

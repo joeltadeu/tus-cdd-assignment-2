@@ -74,4 +74,12 @@ public class AppointmentService {
         savedPatient.setLastUpdated(LocalDateTime.now());
         repository.save(savedPatient);
     }
+
+    public void delete(Long id) {
+        log.info("Before delete, checking if the appointment exists...");
+        final var appointment = findById(id);
+
+        log.info("Appointment found, deleting...");
+        repository.delete(appointment);
+    }
 }

@@ -1,0 +1,19 @@
+{
+  "uri": {
+    "doctor": "/v1/doctors",
+    "patient": "/v1/patients",
+    "appointment": "/v1/appointments"
+  },
+  "params": {
+    "doctor": {
+      "firstName": "Karen",
+      "lastName": "Fitzgerald",
+      "email": "karen.fitzgerald@medicalclinic.com"
+    },
+    "patient": {
+      "firstName": "Lucas",
+      "lastName": "Johnson",
+      "email": "lucas.johnson@gmail.com"
+    }
+  }
+}

@@ -1,11 +1,12 @@
 package com.pms.appointment.controller;
 
-import com.pms.models.dto.appointment.AppointmentResponse;
-import com.pms.models.dto.appointment.CreateAppointmentRequest;
+import static com.pms.appointment.controller.constants.AppointmentConstants.*;
+
 import com.pms.appointment.controller.mapper.AppointmentMapper;
 import com.pms.appointment.service.AppointmentService;
 import com.pms.controller.PmsController;
-import com.pms.models.dto.doctor.DoctorResponse;
+import com.pms.models.dto.appointment.AppointmentResponse;
+import com.pms.models.dto.appointment.CreateAppointmentRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -22,8 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static com.pms.appointment.controller.constants.AppointmentConstants.*;
 
 @RestController
 @RequestMapping("/v1/appointments")
@@ -115,44 +114,44 @@ public class AppointmentController implements PmsController {
         return ResponseEntity.ok(appointment);
     }
 
-    @Operation(summary = "Confirm payment by appointment id",
-            description = "This endpoint is responsible to confirm payment of an appointment by id",
+    @Operation(summary = "Delete the appointment by id",
+            description = "This endpoint is responsible to delete the appointment by id",
             security = @SecurityRequirement(name = AUTHORIZATION),
-            parameters = {@Parameter(name = "id", description = "Id of the appointment to be confirmed as paid", example = "1", in = ParameterIn.PATH)})
+            parameters = {@Parameter(name = "id", description = "Id of the appointment to be deleted", example = "1", in = ParameterIn.PATH)})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = HTTP_STATUS_CODE_OK, description = "Return paid appointment",
+            @ApiResponse(responseCode = HTTP_STATUS_CODE_OK, description = "Appointment deleted",
                     content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AppointmentResponse.class))
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
                     }),
             @ApiResponse(responseCode = HTTP_STATUS_CODE_UNAUTHORIZED, description = "Unauthorized",
                     content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema())
                     }),
-            @ApiResponse(responseCode = HTTP_STATUS_CODE_NOT_FOUND, description = "Appointment not found",
+            @ApiResponse(responseCode = HTTP_STATUS_CODE_NOT_FOUND,
+                    description = "Appointment not found",
                     content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     examples = {@ExampleObject(name = EXAMPLE_NOT_FOUND_NAME,
-                                            description = "A not found response example when trying to confirm payment for an appointment does not exist",
+                                            description = "A not found response example when trying to delete an appointment does not exist",
                                             value = APPOINTMENT_EXAMPLE_ERROR_404_NOT_FOUND)})
                     }),
             @ApiResponse(responseCode = HTTP_STATUS_CODE_INTERNAL_SERVER_ERROR,
-                    description = "An unexpected error occurred during confirm payment",
+                    description = "An unexpected error occurred during delete the appointment",
                     content = {
                             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     examples = {@ExampleObject(name = EXAMPLE_INTERNAL_SERVER_ERROR_NAME,
-                                            description = "A internal server error response example when trying to confirm payment",
+                                            description = "A internal server error response example when trying to delete an appointment",
                                             value = EXAMPLE_ERROR_500_INTERNAL_SERVER_ERROR)})
                     })
     })
-    @PostMapping("/{id}/paid")
-    public ResponseEntity<AppointmentResponse> paid(
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
             @PathVariable
             Long id) {
-        log.info("Request for confirm payment by appointment id [{}]", id);
+        log.info("Request for delete appointment by id [{}]", id);
 
-        final var appointment = service.paid(id);
-        return ResponseEntity.ok(appointment);
+        service.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
