@@ -21,6 +21,12 @@ For testing, in addition to unit tests, we have two other projects:
 - **[pms-integration-tests](tests/tests-integration-pms)**: This project aims to create integrated tests using the [Karate](https://github.com/karatelabs/karate) library.
 - **[pms-performance-tests](tests/tests-performance-pms)**: This project aims to create performance tests using the [Gatling](https://docs.gatling.io/) library.
 
+This project supports three distinct deployment strategies to accommodate different environments and scalability needs:
+
+- **[deployment/docker-compose](deployment/docker-compose)**: This project aims to deploy microservices using [Docker Compose](https://docs.docker.com/compose/). 
+- **[deployment/docker-swarm](deployment/docker-swarm)**: This project aims to deploy microservices using [Docker Swarm](https://docs.docker.com/engine/swarm/). 
+- **[deployment/k8s](deployment/k8s)**: This project aims to deploy microservices using [Kubernetes (K8s)](https://kubernetes.io/docs/). 
+
 Key Technical Features:
 
 - **Database**: Each microservice uses its own dedicated [MariaDB](https://mariadb.com/docs/general-resources/database-theory/introduction-to-relational-databases) schema. Table creation and initial data seeding are handled via specific scripts located within each service's resources.
@@ -281,7 +287,7 @@ mvn gatling:test
 
 This project demonstrates three distinct strategies for deploying the microservices.
 
-### Docker Compose
+### 📦 Docker Compose
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. It is ideal for local development and simple deployments.
 
@@ -306,7 +312,7 @@ docker compose -f docker-compose.yml down
 
 ---
 
-### Docker Swarm
+### 🐳 Docker Swarm
 
 **Docker Swarm** is a clustering and scheduling tool for Docker containers. It allows you to manage a cluster of Docker engines as a single virtual system. This setup is typically run on a cluster of virtual machines or EC2 instances.
 
@@ -380,7 +386,7 @@ docker stack rm pms
 
 ---
 
-### Kubernetes (K8s)
+### ☸️ Kubernetes (K8s)
 
 **Kubernetes** is an open-source system for automating deployment, scaling, and management of containerized applications. This deployment utilizes **Helm** for infrastructure components and **kubectl** for microservices.
 
