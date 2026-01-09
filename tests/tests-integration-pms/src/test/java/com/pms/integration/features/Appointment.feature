@@ -39,9 +39,7 @@ Feature: Appointment - Create, Get by Id
   @Ignore
   Scenario: Insert Appointment
     * def req = read('data/appointment_request.json')
-    * def now = new Date()
-    * def formatter = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-    * req.startTime = formatter.format(now)
+    * req.startTime = java.time.Instant.now().toString()
     * req.patientId = patientId
     * req.doctorId = doctorId
     Given url appointment_url

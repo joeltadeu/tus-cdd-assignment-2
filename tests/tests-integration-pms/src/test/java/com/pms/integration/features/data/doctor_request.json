@@ -2,7 +2,7 @@
   "firstName": "{{firstName}}",
   "lastName": "{{lastName}}",
   "title": "Dr.",
-  "speciality": 1,
+  "specialityId": 1,
   "email": "{{email}}",
   "phone": "898-538-0178",
   "department": "Primary Care"

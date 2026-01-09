@@ -8,9 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath> <!-- adjust path accordingly -->
     </parent>
-    <artifactId>doctor</artifactId>
+    <artifactId>ms-doctor</artifactId>
     <packaging>jar</packaging>
-    <name>doctor</name>
+    <name>ms-doctor</name>
     <description>Doctor Service</description>
     <properties>
         <java.version>21</java.version>

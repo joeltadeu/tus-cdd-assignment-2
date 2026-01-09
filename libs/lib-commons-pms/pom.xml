@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>com.pms</groupId>
-    <artifactId>pms-commons-lib</artifactId>
+    <artifactId>lib-commons-pms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pms-commons-lib</name>
+    <name>lib-commons-pms</name>
     <description>PMS Commons Library</description>
 
     <properties>

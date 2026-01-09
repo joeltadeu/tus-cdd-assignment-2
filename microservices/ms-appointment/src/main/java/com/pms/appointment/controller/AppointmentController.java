@@ -152,6 +152,6 @@ public class AppointmentController implements PmsController {
         log.info("Request for delete appointment by id [{}]", id);
 
         service.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

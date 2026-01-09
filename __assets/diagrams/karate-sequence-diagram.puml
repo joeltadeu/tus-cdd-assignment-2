@@ -1,0 +1,17 @@
+@startuml
+title PMS Integration Test Execution Flow
+
+actor JUnit as J
+participant "Karate Engine" as K
+participant "Feature File\n(.feature)" as F
+participant "PMS Service\n(API)" as S
+
+J -> K: Start TestRunner / ServiceTest
+K -> F: Load Feature + Background
+F -> S: HTTP Request\n(POST / GET / PUT / DELETE)
+S --> F: JSON Response
+F --> K: Assertions + Validations
+K --> J: Test Results
+J -> J: Generate Reports\n(HTML, JSON, XML)
+
+@enduml

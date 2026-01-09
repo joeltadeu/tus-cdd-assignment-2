@@ -16,6 +16,11 @@ The system consists of three independent microservices:
 - **[ms-patient](microservices/ms-patient)**: Manages patient data, including personal details and medical history records.
 - **[ms-appointment](microservices/ms-appointment)**: Orchestrates the scheduling of appointments, integrating with the Doctor and Patient services to validate and retrieve relevant information.
 
+For testing, in addition to unit tests, we have two other projects:
+
+- **[pms-integration-tests](tests/tests-integration-pms)**: This project aims to create integrated tests using the [Karate](https://github.com/karatelabs/karate) library.
+- **[pms-performance-tests](tests/tests-performance-pms)**: This project aims to create performance tests using the [Gatling](https://docs.gatling.io/) library.
+
 Key Technical Features:
 
 - **Database**: Each microservice uses its own dedicated [MariaDB](https://mariadb.com/docs/general-resources/database-theory/introduction-to-relational-databases) schema. Table creation and initial data seeding are handled via specific scripts located within each service's resources.
@@ -172,7 +177,6 @@ Each microservice is configured with `logback-spring.xml` to send logs to Logsta
 
 ![Alt text](__assets/images/kibana-discover-logs.png?raw=true "Kibana Log Discover Example")
 
-
 ---
 
 ## 📊 Monitoring
@@ -221,14 +225,35 @@ Access Prometheus at http://localhost:9090
 
 ---
 
-## ⚡ Performance Tests
+## 🧪 Tests
 
-### Gatling
+The project includes three types of tests: unit tests, integration tests using Karate, and performance tests using Gatling.
 
-**Gatling** was used to load test the microservices. It is a powerful tool for measuring system performance, scalability, and resilience under load.
+### 🧩 Unit tests
 
-#### Running Tests
-The following Maven command triggers a load simulation that targets all three microservices:
+Execute the unit tests using the command bellow:
+```bash
+mvn test 
+```
+
+### 🔗 Integration tests
+
+Karate is a testing framework designed for API testing, offering a simplified and expressive syntax to create and execute tests for web services. It integrates seamlessly with HTTP, allowing for straightforward validation of RESTful APIs by enabling testers to define requests and assertions in a readable, concise manner.
+
+Execute the karate tests using the command bellow:
+```bash
+mvn test -Dkarate.env=local
+```
+
+Results can be found in the [tests/tests-integration-pms/target/karate-reports]() folder
+
+![Alt text](__assets/images/karate-results.png?raw=true "Karate Test Result")
+
+### ⚡ Performance tests
+
+Gatling is a powerful open-source load testing tool designed to analyze and measure the performance of web applications. It allows developers and testers to simulate a large number of users interacting with a system, providing detailed reports and metrics on response times, throughput, and error rates.
+
+Execute the performance tests using the command bellow:
 
 ```bash
 mvn gatling:test  

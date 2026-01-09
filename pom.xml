@@ -34,13 +34,13 @@
     </properties>
 
     <modules>
-        <module>libs/pms-commons-lib</module>
-        <module>libs/pms-models-lib</module>
+        <module>libs/lib-commons-pms</module>
+        <module>libs/lib-models-pms</module>
         <module>microservices/ms-doctor</module>
         <module>microservices/ms-patient</module>
         <module>microservices/ms-appointment</module>
-        <module>tests/pms-automation-tests</module>
-        <module>tests/pms-performance-tests</module>
+        <module>tests/tests-integration-pms</module>
+        <module>tests/tests-performance-pms</module>
     </modules>
 
     <dependencies>

@@ -213,7 +213,7 @@ public class DoctorController implements PmsController {
         log.info("Request for delete doctor by id [{}]", id);
 
         service.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Retrieve a list of doctors",

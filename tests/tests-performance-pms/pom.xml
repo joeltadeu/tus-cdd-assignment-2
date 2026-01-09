@@ -9,9 +9,9 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>performance-tests</artifactId>
+    <artifactId>tests-performance-pms</artifactId>
     <packaging>jar</packaging>
-    <name>Performance tests</name>
+    <name>tests-performance-pms</name>
     <description>Performance tests using Gatling</description>
 
     <properties>

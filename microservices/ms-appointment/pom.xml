@@ -8,9 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
-    <artifactId>appointment</artifactId>
+    <artifactId>ms-appointment</artifactId>
     <packaging>jar</packaging>
-	<name>appointment </name>
+	<name>ms-appointment</name>
 	<description>Appointment Service</description>
     <properties>
         <java.version>21</java.version>

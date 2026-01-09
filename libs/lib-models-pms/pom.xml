@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>com.pms</groupId>
-    <artifactId>pms-models-lib</artifactId>
+    <artifactId>lib-models-pms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pms-models-lib</name>
+    <name>lib-models-pms</name>
     <description>PMS Models Library</description>
 
     <properties>

@@ -1,6 +1,7 @@
 Feature: Patient - Create, Update, Get by Id, Get All, Delete
   Background:
     * def patient_url = patientHost + config.uri.patient
+    * def RandomData = Java.type('com.pms.integration.util.RandomData')
 
   @PatientService
   @CreatingPatient
@@ -49,22 +50,22 @@ Feature: Patient - Create, Update, Get by Id, Get All, Delete
     Given url patient_url
     When method GET
     Then status 200
-    And match each response.[*] == '#notnull'
-    And match each response.[*] contains deep {id: '#number'}
-    And match each response.[*] contains deep {firstName: '#string'}
-    And match each response.[*] contains deep {lastName: '#string'}
-    And match each response.[*] contains deep {email: '#string'}
-    And match each response.[*] contains deep {address: '#string'}
-    And match each response.[*] contains deep {dateOfBirth: '#string'}
+    And match each response.content[*] == '#notnull'
+    And match each response.content[*] contains deep {id: '#number'}
+    And match each response.content[*] contains deep {firstName: '#string'}
+    And match each response.content[*] contains deep {lastName: '#string'}
+    And match each response.content[*] contains deep {email: '#string'}
+    And match each response.content[*] contains deep {address: '#string'}
+    And match each response.content[*] contains deep {dateOfBirth: '#string'}
     * call read('Patient.feature@DeletePatient') { id: '#(patientCreateResponse.response.id)'}
 
   @CreatePatient
   @Ignore
   Scenario: Insert Patient
     * def req = read('data/patient_request.json')
-    * req.firstName = config.params.patient.firstName
-    * req.lastName = config.params.patient.lastName
-    * req.email = config.params.patient.email
+    * req.firstName = RandomData.randomFirstName()
+    * req.lastName = RandomData.randomLastName()
+    * req.email = RandomData.randomEmail(req.firstName, req.lastName)
     Given url patient_url
     And request req
     When method POST
@@ -100,8 +101,9 @@ Feature: Patient - Create, Update, Get by Id, Get All, Delete
     When method GET
     Then status 200
     And match response == '#notnull'
+    * print response
     And match response contains deep {id: '#number'}
-    And match response contains deep {fistName: '#string'}
+    And match response contains deep {firstName: '#string'}
     And match response contains deep {lastName: '#string'}
     And match response contains deep {email: '#string'}
     And match response contains deep {address: '#string'}

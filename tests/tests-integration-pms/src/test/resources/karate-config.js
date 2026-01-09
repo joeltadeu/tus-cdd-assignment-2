@@ -23,7 +23,9 @@ function fn() {
         }
     }
 
-    console.log('Testing URL: ', config.host);
+    console.log('Patient URL: ', config.patientHost);
+    console.log('Doctor URL: ', config.doctorHost);
+    console.log('Appointment URL: ', config.appointmentHost);
     config.config = read('_config.json')
     return config;
 }

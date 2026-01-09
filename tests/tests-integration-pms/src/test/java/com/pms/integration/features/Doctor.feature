@@ -1,6 +1,7 @@
 Feature: Doctor - Create, Update, Get by Id, Get All, Delete
   Background:
     * def doctor_url = doctorHost + config.uri.doctor
+    * def RandomData = Java.type('com.pms.integration.util.RandomData')
 
   @DoctorService
   @CreatingDoctor
@@ -49,24 +50,25 @@ Feature: Doctor - Create, Update, Get by Id, Get All, Delete
     Given url doctor_url
     When method GET
     Then status 200
-    And match each response.[*] == '#notnull'
-    And match each response.[*] contains deep {id: '#number'}
-    And match each response.[*] contains deep {firstName: '#string'}
-    And match each response.[*] contains deep {lastName: '#string'}
-    And match each response.[*] contains deep {title: '#string'}
-    And match each response.[*] contains deep {speciality: '#string'}
-    And match each response.[*] contains deep {email: '#string'}
-    And match each response.[*] contains deep {phone: '#string'}
-    And match each response.[*] contains deep {department: '#string'}
+    And match each response.content[*] == '#notnull'
+    And match each response.content[*] contains deep {id: '#number'}
+    And match each response.content[*] contains deep {firstName: '#string'}
+    And match each response.content[*] contains deep {lastName: '#string'}
+    And match each response.content[*] contains deep {title: '#string'}
+    And match each response.content[*] contains deep {speciality: '#string'}
+    And match each response.content[*] contains deep {email: '#string'}
+    And match each response.content[*] contains deep {phone: '#string'}
+    And match each response.content[*] contains deep {department: '#string'}
     * call read('Doctor.feature@DeleteDoctor') { id: '#(doctorCreateResponse.response.id)'}
 
   @CreateDoctor
   @Ignore
   Scenario: Insert Doctor
     * def req = read('data/doctor_request.json')
-    * req.firstName = config.params.doctor.firstName
-    * req.lastName = config.params.doctor.lastName
-    * req.email = config.params.doctor.email
+    * req.firstName = RandomData.randomFirstName()
+    * req.lastName = RandomData.randomLastName()
+    * req.email = RandomData.randomEmail(req.firstName, req.lastName)
+    * print req.email
     Given url doctor_url
     And request req
     When method POST
@@ -103,7 +105,7 @@ Feature: Doctor - Create, Update, Get by Id, Get All, Delete
     Then status 200
     And match response == '#notnull'
     And match response contains deep {id: '#number'}
-    And match response contains deep {fistName: '#string'}
+    And match response contains deep {firstName: '#string'}
     And match response contains deep {lastName: '#string'}
     And match response contains deep {speciality: '#string'}
     And match response contains deep {email: '#string'}
